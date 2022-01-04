@@ -31,11 +31,12 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        // run Sign in Launcher
         val signInLauncher = registerForActivityResult(
             FirebaseAuthUIActivityResultContract()
         ) { res ->
             this.onSignInResult(res)
-        }
+          }
 
         if(firebaseAuth.currentUser == null) {
             // Start sign in/sign up activity
