@@ -12,6 +12,14 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 
+import android.view.Menu
+import androidx.annotation.NonNull
+
+import com.google.android.gms.tasks.OnCompleteListener
+
+
+import android.view.MenuItem
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -91,6 +99,29 @@ class MainActivity : AppCompatActivity() {
             // response.getError().getErrorCode() and handle the error.
             // ...
         }
+    }
+
+
+    // to add Main Menu to this Activity
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+
+    // function to handle selected item from menu
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.getItemId() === R.id.menu_sign_out)
+        {
+            AuthUI.getInstance().signOut(this)
+                .addOnCompleteListener {
+                    Toast.makeText(this@MainActivity,"You have been signed out.",Toast.LENGTH_LONG  ).show()
+
+                    // Close activity
+                    finish()
+                }
+        }
+        return true
     }
 
 
