@@ -19,11 +19,15 @@ import com.google.android.gms.tasks.OnCompleteListener
 
 
 import android.view.MenuItem
+import android.widget.EditText
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var firebaseAuth : FirebaseAuth
+    var firebaseDatabase = Firebase.database
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,10 +35,20 @@ class MainActivity : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+
+
         val sendMessageButton : FloatingActionButton = findViewById(R.id.sendMessageButton)
+        val input : EditText = findViewById(R.id.input)
 
         sendMessageButton.setOnClickListener{
             Log.d(TAG,"you clicked on send message button")
+
+            firebaseDatabase.getReference().push().setValue(input.text.toString(), firebaseAuth.currentUser!!.displayName.toString())
+
+            Log.d(TAG,firebaseAuth.currentUser!!.displayName.toString())
+
+            // Clear the input
+            input.setText("")
         }
 
 
